@@ -1,0 +1,22 @@
+# Academic deliverables — not part of the live site
+Robert_Williams_GRA_491_Milestone_5_Assignment.docx
+Robert_Williams_GRA_491_Milestone_5_Ready-for-Print_Portfolio.pdf
+Underground Frequency - Brand Style Guide.pdf
+UF_Brand_Style_Guide.html
+
+# Prior prototype — not part of the live site
+demo.html
+
+# Personal-info stationery assets — exclude from public repo
+uf_business_card.jpg
+uf_envelope.jpg
+uf_letterhead.jpg
+uf_notebook.jpg
+
+# OS + editor cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.log
