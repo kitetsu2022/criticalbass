@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OG Card · Underground Frequency</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Rajdhani:wght@400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05020e;
+    --cyan: #00ffff;
+    --magenta: #ff00b4;
+    --purple: #8a2bff;
+    --white: #ffffff;
+    --muted: #a098c8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 1200px;
+    height: 630px;
+    overflow: hidden;
+    background: #000;
+  }
+
+  body {
+    display: grid;
+    place-items: center;
+    font-family: 'Rajdhani', sans-serif;
+  }
+
+  .og-card {
+    position: relative;
+    width: 1200px;
+    height: 630px;
+    background: var(--bg);
+    overflow: hidden;
+  }
+
+  /* Background FX */
+  .nebula {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    pointer-events: none;
+  }
+  .nebula-cyan {
+    width: 720px; height: 720px;
+    background: radial-gradient(circle, rgba(0, 255, 255, 0.38), transparent 65%);
+    top: -220px; left: -180px;
+  }
+  .nebula-magenta {
+    width: 640px; height: 640px;
+    background: radial-gradient(circle, rgba(255, 0, 180, 0.35), transparent 65%);
+    bottom: -200px; right: -140px;
+  }
+  .nebula-purple {
+    width: 520px; height: 420px;
+    background: radial-gradient(ellipse at center, rgba(138, 43, 255, 0.28), transparent 65%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.9) 35%, transparent 85%);
+    -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.9) 35%, transparent 85%);
+  }
+
+  /* Corner brackets */
+  .bracket {
+    position: absolute;
+    width: 32px; height: 32px;
+  }
+  .bracket-tl {
+    top: 40px; left: 40px;
+    border-top: 2px solid var(--cyan);
+    border-left: 2px solid var(--cyan);
+  }
+  .bracket-br {
+    bottom: 40px; right: 40px;
+    border-bottom: 2px solid var(--magenta);
+    border-right: 2px solid var(--magenta);
+  }
+
+  /* Content layout */
+  .content {
+    position: absolute;
+    inset: 72px 72px;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    align-items: center;
+  }
+
+  .top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo-mark {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .logo-img {
+    height: 88px;
+    width: auto;
+    filter: drop-shadow(0 0 18px rgba(0, 255, 255, 0.35));
+  }
+  .logo-text {
+    font-family: 'Orbitron', monospace;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    line-height: 1.15;
+    color: var(--white);
+  }
+  .logo-text small {
+    display: block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    color: var(--cyan);
+    margin-top: 4px;
+  }
+
+  .live-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    color: var(--white);
+    padding: 8px 16px;
+    border: 1px solid rgba(0, 255, 255, 0.35);
+    background: rgba(0, 255, 255, 0.06);
+    border-radius: 100px;
+  }
+  .live-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--magenta);
+    box-shadow: 0 0 10px var(--magenta);
+  }
+
+  .tagline {
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    font-size: 86px;
+    line-height: 0.98;
+    letter-spacing: -2.5px;
+    text-align: center;
+  }
+  .tagline-line-1 { color: var(--white); display: block; }
+  .tagline-line-2 {
+    display: block;
+    background: linear-gradient(135deg, var(--cyan) 0%, var(--magenta) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 18px rgba(0, 255, 255, 0.2));
+  }
+
+  .bottom-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-top: 20px;
+    border-top: 1px solid rgba(0, 255, 255, 0.12);
+  }
+
+  .bottom-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .bottom-name {
+    font-family: 'Orbitron', monospace;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: var(--white);
+  }
+  .bottom-role {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2.5px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .bottom-role .sep { color: var(--magenta); margin: 0 6px; }
+
+  .bottom-url {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 18px;
+    letter-spacing: 2.5px;
+    color: var(--cyan);
+    text-shadow: 0 0 18px rgba(0, 255, 255, 0.45);
+  }
+</style>
+</head>
+<body>
+
+<div class="og-card">
+  <div class="nebula nebula-cyan"></div>
+  <div class="nebula nebula-magenta"></div>
+  <div class="nebula nebula-purple"></div>
+  <div class="grid-overlay"></div>
+
+  <div class="bracket bracket-tl"></div>
+  <div class="bracket bracket-br"></div>
+
+  <div class="content">
+    <div class="top-row">
+      <div class="logo-mark">
+        <img src="cyber_logo.png" alt="Underground Frequency" class="logo-img">
+        <div class="logo-text">
+          UNDERGROUND<br>FREQUENCY
+          <small>// Rob Williams</small>
+        </div>
+      </div>
+      <div class="live-pill">
+        <span class="live-dot"></span>
+        <span>Broadcasting · Friday 8PM CST</span>
+      </div>
+    </div>
+
+    <div class="tagline">
+      <span class="tagline-line-1">I don't chase trends.</span>
+      <span class="tagline-line-2">I set them.</span>
+    </div>
+
+    <div class="bottom-row">
+      <div class="bottom-meta">
+        <span class="bottom-name">Robert Williams</span>
+        <span class="bottom-role">Graphic Designer<span class="sep">·</span>Twitch DJ<span class="sep">·</span>Melodic · Progressive · Afro House</span>
+      </div>
+      <div class="bottom-url">criticalbass.com</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
