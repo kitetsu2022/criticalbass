@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#05020e">
+<title>The Twitch Brand System: Designing for 4K While Viewers Watch at 720p · Underground Frequency</title>
+<meta name="description" content="Why I build every overlay at 4K when most viewers watch at 720p. Readability rules, contrast over detail, safe zones, and designing for the canvas the viewer actually sees.">
+<meta property="og:title" content="The Twitch Brand System: Designing for 4K While Viewers Watch at 720p">
+<meta property="og:description" content="Why I build every overlay at 4K when most viewers watch at 720p. Readability rules, contrast over detail, and designing for the canvas the viewer actually sees.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://criticalbass.com/notes/the-twitch-brand-system-designing-for-4k-while-viewers-watch-720p">
+<meta property="og:image" content="../event_flyer.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="../cyber_logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<canvas id="starfield" aria-hidden="true"></canvas>
+<div class="grid-overlay" aria-hidden="true"></div>
+<div class="scanlines" aria-hidden="true"></div>
+<div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+<nav id="nav">
+  <a href="../index.html" class="nav-brand">
+    <span class="nav-logo-mark">UF</span>
+    <span class="nav-logo-text">Underground<br>Frequency</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#signal">Signal</a></li>
+    <li><a href="../index.html#work">Work</a></li>
+    <li><a href="../index.html#broadcast">Broadcast</a></li>
+    <li><a href="index.html" class="active">Notes</a></li>
+    <li><a href="../index.html#merch">Merch</a></li>
+    <li><a href="../index.html#connect">Connect</a></li>
+  </ul>
+  <a href="https://twitch.tv/undergroundfrequency" target="_blank" rel="noopener" class="nav-cta">
+    <span class="live-dot"></span>Tune In
+  </a>
+</nav>
+
+<article class="article">
+  <header class="article-hero">
+    <div class="nebula nebula-2" aria-hidden="true"></div>
+    <div class="wrap article-hero-inner">
+      <a href="index.html" class="article-back" data-reveal>
+        <svg viewBox="0 0 24 24" fill="none"><path d="M19 12H5M11 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Back to Notes</span>
+      </a>
+      <div class="article-meta" data-reveal>
+        <span class="note-cat">Design</span>
+        <span class="article-date">2026 · 04 · 23</span>
+        <span class="article-read">9 min read</span>
+      </div>
+      <h1 class="article-title" data-reveal>
+        The Twitch Brand System: What I Learned Designing Overlays for <span class="grad">4K While Viewers Watch at 720p</span>
+      </h1>
+      <p class="article-byline" data-reveal>By Robert Williams · Underground Frequency</p>
+    </div>
+  </header>
+
+  <div class="article-body wrap">
+    <p class="article-lede" data-reveal>Here is a conversation that happens in every streamer's head eventually. You are spending hours inside Photoshop or your code editor, pushing pixels around, obsessing over the edge treatment on a border, fine-tuning the glow on a lower third, making sure the gradient on your scene transition has exactly the right color stops. Meanwhile, the viewer who is about to watch your stream is on mobile with the video player shrunk to a quarter of their screen, or on a laptop with Twitch set to auto quality, which usually lands somewhere around 720p at best. So the obvious question is whether any of that detail work actually matters when the end user is never going to see it at full resolution.</p>
+
+    <p>The answer I landed on after building out the entire Underground Frequency brand system is that it matters more than you would think, but not for the reasons most streamers assume. This is everything I learned designing overlays at 4K for an audience watching at 720p, why the math of downscaling changes how you design, and how building a proper brand system at the highest resolution actually ends up serving the viewer who will never see it that way.</p>
+
+    <h2>The Resolution Mismatch Most Streamers Ignore</h2>
+
+    <p>Let me frame the actual problem first, because most streamers do not even realize they are solving it wrong. When you build a Twitch overlay, you are designing on a canvas that is almost certainly 1920x1080 or 3840x2160 depending on how ambitious you are, because that is what your monitor runs at and that is what OBS defaults to for the scene canvas. Your source resolution going into the encoder is usually 1920x1080 at a minimum.</p>
+
+    <p>The viewer, however, is not seeing any of that. Twitch transcodes your stream into multiple quality tiers, and the vast majority of viewers default to auto quality, which biases toward the bandwidth they actually have available. In practical terms, most of your audience is watching at 720p, and a significant chunk is watching at 480p on mobile, and some of them are watching in a 400 pixel wide browser window while they multitask. That beautiful 4K detail you just spent six hours polishing is getting compressed, downscaled, and then often squeezed into a browser window smaller than your phone.</p>
+
+    <p>This is the gap that shapes every decision I make in the UF brand system. I am not designing for the canvas I am working on. I am designing for the canvas the viewer actually sees, which is usually one third the size I am staring at while I build it.</p>
+
+    <h2>Why I Still Build Everything at 4K</h2>
+
+    <p>Given all of that, you might expect me to advocate for designing at 720p to match the viewer experience, but I actually do the opposite. Every overlay, every alert, every lower third in the Underground Frequency system gets built against a 4K canvas at 3840x2160. The reason comes down to one word that changes everything, and that word is downscaling.</p>
+
+    <p>When you design an element at 720p and then stretch it up to display at 1080p or larger, everything falls apart. Edges get soft, text gets blurry, thin strokes get destroyed by anti-aliasing, and the whole composition loses the crispness that makes it feel professional. When you design at 4K and let the system downscale to 1080p or 720p on the way to the viewer, the opposite happens. Details that were razor sharp at 4K stay sharp after downscaling, fine linework remains readable because the scaler has enough pixels to work with, and colors stay vibrant because compression has a cleaner source to start from.</p>
+
+    <p>Designing at the highest reasonable resolution and downscaling to the viewer is one of the oldest rules in broadcast design, and it still applies in the Twitch era. The modern compression pipeline is brutal, and the only defense against it is giving it the cleanest possible source material to work with. A 4K overlay that gets compressed to 720p looks measurably better than a 720p overlay that gets compressed to 720p, because the encoder has more information to make decisions with.</p>
+
+    <h2>The Readability Rule That Changed How I Design</h2>
+
+    <p>Here is the single most important lesson I learned the hard way, and it is the one that still catches me off guard when I forget it. Anything that needs to be readable for the viewer must be readable at 720p, not at your design resolution. That sounds obvious when you read it, but almost nobody actually tests it during the design process, and the result is a flood of overlays on Twitch right now with lower thirds that are essentially decorative because the text is too small to parse at the resolution the viewer is actually seeing.</p>
+
+    <p>My workflow now includes a mandatory step where I export the current design, downscale it to 1280x720, and look at it at that size before I consider anything finished. If the DJ name on the lower third is not readable at that downscaled size, the lower third is broken, no matter how good it looks on my 4K monitor. If the label on a scene card cannot be parsed at a glance when compressed to the size a mobile viewer sees, it is just noise on the screen.</p>
+
+    <p>The rule I settled on is that functional text must occupy a minimum percentage of the total canvas height rather than a minimum pixel value. Something like three percent of the canvas height for primary text, two percent for secondary text, and I do not go below that regardless of how much space I want to give something else. Percentages survive resolution changes, pixel values do not.</p>
+
+    <h2>Designing for Contrast, Not Detail</h2>
+
+    <p>The second hard lesson from the resolution mismatch is that detail disappears under compression, but contrast survives it. Anything that depends on fine detail to communicate, like intricate textures, subtle gradients, or delicate line patterns, gets smeared out by the transcoder and often looks worse than a simpler alternative would have. Anything that depends on strong contrast between foreground and background, between light and dark, between warm and cool, survives the compression pipeline almost intact.</p>
+
+    <p>This changed how I approach every UF overlay. Instead of trying to add richness through subtle detail, I add it through aggressive contrast. The Underground Frequency color system is built around a near-black void against saturated cyan and magenta for exactly this reason. Those colors push hard against each other in terms of luminance and hue, which means the contrast carries through even when the image is compressed to hell and back. A cyan outline on a void background will still read at 480p on a phone. A subtle gray gradient on a dark gray background will turn into mud at the same resolution.</p>
+
+    <p>The same logic applies to type. Bold weights survive compression, thin weights do not. High-contrast pairings between background and text survive, low-contrast pairings get eaten. If you want your brand to read across the full range of viewer resolutions, you have to design for the brutal end of that range and let the clean end take care of itself.</p>
+
+    <h2>Why I Use Vector and Code Whenever Possible</h2>
+
+    <p>One of the most important decisions I made early in building the UF overlay system was to avoid raster images for anything that could be built with code or vectors. My alerts, scene transitions, and most of my overlays are built in HTML and CSS rather than in Photoshop or After Effects, and my static overlay elements lean heavily on SVG instead of PNG exports.</p>
+
+    <p>The reason is resolution independence. When I build an alert in HTML and CSS with vmin-based sizing, the same file renders perfectly at 720p, 1080p, and 4K with no loss of quality at any tier. When I build it as a flattened PNG at 1920x1080, it is locked to that resolution and any scaling up or down introduces artifacts. Vectors and code are resolution-agnostic by nature, which is exactly what you want when you do not know what resolution your work is actually going to be viewed at.</p>
+
+    <p>This also feeds back into the design system itself. When every element is built with scalable techniques, updating the brand becomes a matter of changing a few variable values rather than reopening twenty Photoshop files and re-exporting at four different sizes. The system becomes maintainable as well as compression-resilient, which matters more over time than you might think when you start adding new overlays to the pile.</p>
+
+    <h2>The Safe Zone Problem</h2>
+
+    <p>Another detail that most streamers miss is the concept of safe zones, borrowed from broadcast television. When your stream is watched on mobile, the video player is often surrounded by interface elements, notification overlays, and thumb zones that occlude the edges of your frame. When it is embedded in a multistream layout, the aspect ratio can get cropped in unexpected ways. When someone is watching in a small window while working, the edges of your canvas are the first thing to fall off the visible area.</p>
+
+    <p>The fix is to treat the outer ten percent of your canvas as decorative space only, and to keep anything functional, like text, key visual elements, and alert content, inside the inner ninety percent. I learned this after watching my own stream on a phone and realizing that part of my lower third was getting clipped by the mobile chat overlay, which made the whole composition look broken even though it rendered perfectly on my desktop preview.</p>
+
+    <p>Once I started designing with explicit safe zones built into every scene, this class of problem disappeared. The rule is simple. If something must be seen to do its job, it lives inside the safe zone. If something is there to add atmosphere, it can live closer to the edges where occlusion is more likely.</p>
+
+    <h2>Testing on the Actual Viewer Experience</h2>
+
+    <p>The last lesson is the most practical one, and it is the one I still have to force myself to do every time I build something new. Before you consider any overlay finished, you have to watch your own stream on the devices your viewers actually use. Not in OBS preview, not in the Twitch dashboard preview, not on your second monitor while you are live. On your actual phone. On a laptop with the video player at a normal size, not full screen. In a browser window that is half the width of your monitor, which is how a lot of people actually consume streams while multitasking.</p>
+
+    <p>Every time I do this, I find at least one thing that is broken in a way I could not have predicted from my design environment. Text that looks fine at 4K becomes marginal at mobile size. A color that read as cyan on my monitor shifts slightly under compression and ends up looking washed out. An animation that felt smooth at full resolution stutters when the encoder has to deal with it. The only way to catch any of this is to actually see what the viewer sees, on the hardware the viewer is using.</p>
+
+    <p>If you are serious about building a Twitch brand system, this testing step is not optional. It is the difference between work that looks great in your portfolio and work that actually serves the audience you are trying to reach.</p>
+
+    <h2>The System That Survives Every Resolution</h2>
+
+    <p>Putting all of this together, the Underground Frequency brand system now operates on a set of principles that keep everything consistent across the absurd range of resolutions a modern stream actually hits. Design at 4K for the cleanest possible source. Use percentages instead of pixel values so everything scales predictably. Lean on contrast rather than detail because contrast survives compression. Build in code or vector whenever possible to stay resolution-agnostic. Respect the safe zone so nothing critical gets occluded. And test on the actual viewer experience before calling anything finished.</p>
+
+    <p>None of this is particularly fancy, and none of it requires expensive tools or deep technical knowledge. It just requires the willingness to treat the viewer's actual experience as the constraint that shapes the work, rather than treating your own design environment as the reference point for what looks good.</p>
+
+    <p>The streamers whose brands feel cohesive and professional are the ones who have internalized this shift. The streamers whose overlays look impressive on their own monitor but fall apart on stream are the ones who are still designing for themselves instead of for the audience. Once you make the switch, every decision starts to make sense in a new way, and the work actually starts serving the people it is supposed to serve.</p>
+
+    <h2>The Paradox That Ties It All Together</h2>
+
+    <p>Here is the paradox that sums up everything I have learned about this. The better you design for 4K, the better your stream looks at 720p. The more rigorously you respect the constraints of the viewer's actual experience, the more freedom you have in your design environment. The more you invest in a proper brand system built on scalable, resolution-independent techniques, the less time you spend fixing problems every time your canvas size changes or your output pipeline updates.</p>
+
+    <p>Building a Twitch brand system is not about making things look good on your monitor. It is about making things look good to the viewer on whatever screen, at whatever resolution, under whatever compression the stream ends up delivering. When you design with that constraint in mind from the beginning, you end up with a system that is not only more professional but also more durable, because it will still work when Twitch updates its encoder, when mobile becomes an even bigger share of your audience, and when whatever comes next in streaming arrives and demands its own set of compromises.</p>
+
+    <p>That is the system I built for Underground Frequency, and it is the system I would build again from scratch if I had to start over tomorrow. Design for the biggest possible canvas, test against the smallest possible viewer, and let the gap between those two extremes shape every decision you make along the way.</p>
+
+    <p class="article-signoff">Stay locked in.</p>
+
+    <aside class="article-author" data-reveal>
+      <div class="article-author-mark">UF</div>
+      <p><strong>Robert Williams</strong> streams as Underground Frequency on Twitch. For more on the UF overlay ecosystem, brand system, and custom stream tools, follow along at criticalbass.com.</p>
+    </aside>
+  </div>
+</article>
+
+<section class="article-outro">
+  <div class="wrap">
+    <div class="outro-card">
+      <div class="outro-glow" aria-hidden="true"></div>
+      <span class="section-label">// Keep the signal locked</span>
+      <h3>Catch the next transmission.</h3>
+      <p>Notes drop when the ideas are ready, not on a schedule. Follow on socials or swing back when the next one lands.</p>
+      <div class="outro-ctas">
+        <a href="index.html" class="btn btn-ghost">
+          <span>All Notes</span>
+        </a>
+        <a href="https://twitch.tv/undergroundfrequency" target="_blank" rel="noopener" class="btn btn-primary">
+          <span class="live-dot"></span>
+          <span>Tune In Live</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <span class="footer-mark">UF</span>
+      <span>© 2025 Underground Frequency · Robert Williams</span>
+    </div>
+    <div class="footer-center">criticalbass.com</div>
+    <div class="footer-right">
+      <span class="live-dot"></span>
+      <span>SIGNAL TRANSMITTED //</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>

@@ -130,20 +130,22 @@
     lbImg.src = '';
   };
 
-  tiles.forEach(tile => {
-    tile.addEventListener('click', () => {
-      const img = tile.querySelector('img');
-      const title = tile.querySelector('.tile-title')?.textContent || '';
-      const meta = tile.querySelector('.tile-meta')?.textContent || '';
-      if (img) openLightbox(img.src, title, meta);
+  if (lb && lbImg && lbCap && lbClose) {
+    tiles.forEach(tile => {
+      tile.addEventListener('click', () => {
+        const img = tile.querySelector('img');
+        const title = tile.querySelector('.tile-title')?.textContent || '';
+        const meta = tile.querySelector('.tile-meta')?.textContent || '';
+        if (img) openLightbox(img.src, title, meta);
+      });
     });
-  });
 
-  lbClose.addEventListener('click', closeLightbox);
-  lb.addEventListener('click', (e) => { if (e.target === lb) closeLightbox(); });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && lb.classList.contains('open')) closeLightbox();
-  });
+    lbClose.addEventListener('click', closeLightbox);
+    lb.addEventListener('click', (e) => { if (e.target === lb) closeLightbox(); });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lb.classList.contains('open')) closeLightbox();
+    });
+  }
 
   /* ---------- Smooth anchor offset for fixed nav ---------- */
   document.querySelectorAll('a[href^="#"]').forEach(a => {

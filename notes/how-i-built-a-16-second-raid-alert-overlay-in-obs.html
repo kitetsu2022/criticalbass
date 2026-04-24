@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#05020e">
+<title>How I Built a 16-Second Raid Alert Overlay in OBS · Underground Frequency</title>
+<meta name="description" content="Walkthrough of building a cinematic custom raid alert overlay for Twitch from scratch. Four-phase glitch animation, vmin scaling, and a locked brand palette in pure HTML and CSS.">
+<meta property="og:title" content="How I Built a 16-Second Raid Alert Overlay in OBS">
+<meta property="og:description" content="The full walkthrough of building a cinematic custom raid alert for Twitch from scratch in pure HTML and CSS.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://criticalbass.com/notes/how-i-built-a-16-second-raid-alert-overlay-in-obs">
+<meta property="og:image" content="../event_flyer.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="../cyber_logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<canvas id="starfield" aria-hidden="true"></canvas>
+<div class="grid-overlay" aria-hidden="true"></div>
+<div class="scanlines" aria-hidden="true"></div>
+<div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+<nav id="nav">
+  <a href="../index.html" class="nav-brand">
+    <span class="nav-logo-mark">UF</span>
+    <span class="nav-logo-text">Underground<br>Frequency</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#signal">Signal</a></li>
+    <li><a href="../index.html#work">Work</a></li>
+    <li><a href="../index.html#broadcast">Broadcast</a></li>
+    <li><a href="index.html" class="active">Notes</a></li>
+    <li><a href="../index.html#merch">Merch</a></li>
+    <li><a href="../index.html#connect">Connect</a></li>
+  </ul>
+  <a href="https://twitch.tv/undergroundfrequency" target="_blank" rel="noopener" class="nav-cta">
+    <span class="live-dot"></span>Tune In
+  </a>
+</nav>
+
+<article class="article">
+  <header class="article-hero">
+    <div class="nebula nebula-2" aria-hidden="true"></div>
+    <div class="wrap article-hero-inner">
+      <a href="index.html" class="article-back" data-reveal>
+        <svg viewBox="0 0 24 24" fill="none"><path d="M19 12H5M11 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Back to Notes</span>
+      </a>
+      <div class="article-meta" data-reveal>
+        <span class="note-cat">Streaming</span>
+        <span class="article-date">2026 · 04 · 23</span>
+        <span class="article-read">9 min read</span>
+      </div>
+      <h1 class="article-title" data-reveal>
+        How I Built a <span class="grad">16-Second Raid Alert Overlay</span> in OBS for My Twitch Stream
+      </h1>
+      <p class="article-byline" data-reveal>By Robert Williams · Underground Frequency</p>
+    </div>
+  </header>
+
+  <div class="article-body wrap">
+    <p class="article-lede" data-reveal>If you stream on Twitch, you already know that raids are one of the most important moments on your channel. Somebody trusted you enough to send their audience your way, and the first few seconds of that raid decide whether those viewers stick around or bounce somewhere else. A generic default alert is not going to cut it when you have built a brand that deserves better, so I built my own from scratch.</p>
+
+    <p>This is the exact process I used to design and code a 16-second animated raid alert overlay for my brand, Underground Frequency. No drag-and-drop builders, no template packs, just hand-written HTML and CSS dropped into OBS as a browser source, with a whole lot of obsessive tweaking until every frame felt like it belonged to the signal.</p>
+
+    <p>If you have ever wanted to build a custom OBS overlay from scratch, this walkthrough will give you the blueprint and hopefully inspire you to stop settling for overlays that look like everybody else's.</p>
+
+    <h2>Why I Built a Custom Raid Alert Instead of Using a Template</h2>
+
+    <p>I run Underground Frequency as a DJ stream brand, and the whole identity is built around a cyberpunk aesthetic with a specific tri-chrome gradient running from cyan through magenta against a near-black void background. Every overlay, every panel, every lower third has to feel like it was cut from the same piece of glass or it breaks the illusion I am trying to build for viewers when they land on the channel.</p>
+
+    <p>The problem with pre-made alert packs is that they are designed to work for everybody, which means they end up looking like nobody in particular. I wanted something that felt like a transmission breaking through from deep space, a signal lock, something that would make a raiding streamer's audience stop scrolling and pay attention to what they just walked into. So I sat down and wrote one myself, and the whole process ended up being faster and more satisfying than I expected.</p>
+
+    <h2>The Design Brief I Gave Myself</h2>
+
+    <p>Before I opened a text editor, I wrote down what the overlay had to actually do. It needed a total duration of 16 seconds from trigger to clean exit, it had to feel cinematic without stealing the scene from whatever music or content was playing underneath, and it had to use the UF color system exclusively with no improvised hues sneaking in. It also had to scale responsively across any resolution without me editing pixel values every time I changed canvas sizes, and it had to include a glitch animation that matched the broadcast signal theme the whole brand is built around.</p>
+
+    <p>One decision worth explaining is why I went with a simple trigger-and-play overlay rather than something that dynamically pulls in the raider's username or raid count. I wanted this overlay to be drop-in simple for anyone who wanted to use a similar approach, with no event listener setup, no custom widget configuration, no API wiring. Just a file, a browser source, and a play button essentially. You can always layer a text alert on top if you want the specifics, but the cinematic overlay itself stands on its own.</p>
+
+    <p>The 16 second duration is also worth explaining. Too short and the alert feels cheap and forgettable, too long and it drags past the point of impact. Sixteen seconds gave me enough room for a proper entrance animation, a hold phase where viewers can absorb what is happening, and a clean exit that does not overstay its welcome. That was the sweet spot I kept landing on after testing a dozen different timings.</p>
+
+    <h2>Setting Up the File Structure</h2>
+
+    <p>I keep my overlays in a simple folder structure, and for the raid alert it was just a single HTML file that contained everything inline. No external CSS file, no external JavaScript dependency, nothing that could break if a path got mangled when I moved the file between machines or uploaded it somewhere new. Everything lives in one document. This is the approach I recommend if you are going to host overlays as OBS browser sources, because it makes the file portable, easy to troubleshoot, and resistant to the kind of weird issues that pop up when you have assets loading from five different places.</p>
+
+    <h2>The Responsive Scaling Trick That Changed Everything</h2>
+
+    <p>Here is the most important technique in the entire overlay, and it is the one most beginners miss entirely when they start building for OBS. I use a CSS custom property defined as <code>--s: 1vmin</code>, which creates a single scaling unit tied to the smaller dimension of the viewport. Every size in the overlay, from font size to padding to border width to animation distance, is then expressed as a multiple of that unit instead of a hard-coded pixel value.</p>
+
+    <pre><code>:root {
+  --s: 1vmin;
+}
+
+.raid-text {
+  font-size: calc(var(--s) * 8);
+  padding: calc(var(--s) * 2) calc(var(--s) * 4);
+}</code></pre>
+
+    <p>The result is that when I load this overlay at 1920x1080 in OBS everything scales perfectly, when I preview it in a smaller browser window it scales down proportionally, and when somebody eventually ports it to a 4K canvas it will scale up without any intervention from me. I never have to touch a pixel value again after the initial build, and the overlay stays sharp across every resolution I throw at it. If you are still hard-coding pixel sizes in your overlays, stop and learn vmin, it will save you more headaches than almost any other single technique in CSS.</p>
+
+    <h2>Locking In the Brand Colors</h2>
+
+    <p>The Underground Frequency palette is non-negotiable, so the first thing I did was define it as CSS variables at the top of the file so I could reference it anywhere without hunting down hex codes.</p>
+
+    <pre><code>:root {
+  --s: 1vmin;
+  --void: #05020E;
+  --cyan: #00F0FF;
+  --magenta: #FF00E5;
+  --purple: #8A00E5;
+}</code></pre>
+
+    <p>Using variables at the root level means I can reference them anywhere in the document, and if I ever want to spin up a variant of this alert for a different event or a collab series, I can change four values and have a completely new color story without rewriting any of the animation logic underneath. This is the kind of discipline that separates a one-off overlay from a cohesive brand system.</p>
+
+    <h2>Typography That Matches the Brand</h2>
+
+    <p>The UF type stack is specific and deliberate, built around three fonts that each do a distinct job. Orbitron at weight 900 handles hero text because it has that chunky futuristic weight you cannot fake with a condensed sans-serif. Rajdhani handles supporting body copy where I need something clean but still stylized. Share Tech Mono handles anything that needs to feel like a HUD readout or terminal output.</p>
+
+    <p>For the raid alert I pulled all three from Google Fonts and assigned them to different elements based on the role each piece of text was playing. The main headline reads like a system status alert, the supporting copy reads like broadcast metadata, and the mono font carries the timestamps and signal indicators that give the whole thing its technical flavor. Three fonts, three jobs, all working together without fighting for attention.</p>
+
+    <h2>The Animation Sequence</h2>
+
+    <p>This is where the 16 second structure really pays off, and it is the part of the process I spent the most time refining. I broke the full animation into four distinct phases, each with its own job and its own timing.</p>
+
+    <p>The first phase runs from zero to two seconds and handles the entrance. A hard glitch effect slams the alert onto the screen, the layout is distorted, chromatic aberration splits the cyan and magenta channels apart from each other, and the whole container appears to be resolving from noise rather than just fading in like every other alert on Twitch. This is achieved with a combination of CSS <code>clip-path</code> keyframes and text shadows that offset on the red and blue axes during the first two seconds.</p>
+
+    <p>The second phase runs from two to four seconds and handles the lock-on. The glitch settles, the alert becomes fully visible, and the border pulses gently in cyan to signal that the transmission has stabilized. This is the moment where viewers register what is happening on screen and lock into the alert.</p>
+
+    <p>The third phase runs from four to thirteen seconds and is the hold, which is the longest stretch at nine full seconds. Everything is perfectly legible and stable, with subtle ambient animation on the background so the composition never feels frozen or dead. I added a slow scanline effect and a very low-opacity grid that drifts across the container, which keeps the eye engaged without pulling focus away from the main content.</p>
+
+    <p>The fourth phase runs from thirteen to sixteen seconds and handles the exit. Another glitch fires off, harder this time, as if the signal is being lost back to wherever it came from. The container fragments, the colors separate one more time in an aggressive chromatic split, and the whole thing collapses to transparent for a clean exit with no lingering elements on screen. The trick to sequencing all of this in pure CSS is the <code>animation-delay</code> property combined with carefully crafted keyframes that each control a different layer of the effect, all firing on page load with their own durations.</p>
+
+    <h2>The Cosmic Glitch Effect</h2>
+
+    <p>This is the signature move of the overlay, and every Underground Frequency production has some variation of this effect, but the raid alert version is the most aggressive iteration in the ecosystem so far. The core of the effect is three stacked copies of the same text element layered on top of each other with absolute positioning.</p>
+
+    <p>The top copy is pure white, below it sits a cyan copy with a slight negative horizontal offset, and below that sits a magenta copy with a slight positive horizontal offset. When all three are aligned you get clean white text with cyan and magenta fringes bleeding out from the edges. Then I animate the offsets so the layers drift independently during the glitch phases.</p>
+
+    <pre><code>@keyframes glitch-shift {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(calc(var(--s) * -0.3), 0); }
+  40% { transform: translate(calc(var(--s) * 0.4), 0); }
+  60% { transform: translate(calc(var(--s) * -0.2), 0); }
+  80% { transform: translate(calc(var(--s) * 0.3), 0); }
+}</code></pre>
+
+    <p>During the entrance and exit phases the cyan and magenta layers offset independently on staggered timing, which produces the chromatic aberration effect you see in glitchy sci-fi interfaces. Because everything is driven by the scaling unit I set up earlier, the glitch intensity scales proportionally with the overlay size, so the effect looks correct whether you are running it on a small preview or a full 4K canvas.</p>
+
+    <h2>Loading the Overlay in OBS</h2>
+
+    <p>Once the HTML file is ready the OBS setup is about as straightforward as it gets. In your scene you add a new Browser Source, point it at the path to your HTML file, set the width to 1920 and the height to 1080, and check the box that says "Shutdown source when not visible" so the animation replays cleanly every time the source becomes active. When you trigger the scene or the source activates during a raid, the 16 second sequence runs exactly as designed and tears itself down on its own.</p>
+
+    <h2>What I Learned Building This</h2>
+
+    <p>A few things will save you hours if you try this approach yourself, and I wish somebody had told me all of them before I started down this path.</p>
+
+    <p>Test your animations at the resolution you will actually stream at, because something that looks perfect in a 1440px browser window can feel completely different once it is sitting in a 1920x1080 canvas inside OBS with your other scene elements surrounding it. The vmin scaling trick solves most of the mechanical scaling issues you will run into, but you still need to eyeball the final product on the actual canvas with everything else in the scene to make sure the composition works as a whole.</p>
+
+    <p>Keep your color palette ruthlessly consistent across everything you build. The reason branded overlays actually look branded is that every single element pulls from the same four or five colors with no exceptions, no improvised accent hues, no "this one looks better in green." If you start improvising mid-project, the cohesion falls apart faster than you would believe, and you end up with overlays that feel like they were made by three different people.</p>
+
+    <p>Do not overdo the motion even when you are building something that is explicitly meant to be animated. I know that sounds ironic coming from somebody who just explained a four-phase glitch animation, but the key word in that breakdown is "phase." The motion is structured with quiet moments built in, not constant churn. If every element is constantly animating the eye has nowhere to rest and the alert becomes pure noise instead of a signal that grabs attention.</p>
+
+    <p>Build for reuse from the beginning, because you will want to make more overlays once the first one is working. I designed this raid alert so the skeleton can be repurposed for follower alerts, subscriber alerts, bit cheers, gift subs, and hosts. Same container structure, same type hierarchy, same brand colors, different triggers and different headline text. If you build one good overlay correctly, you have actually built the foundation for six or seven of them.</p>
+
+    <h2>Try It for Yourself</h2>
+
+    <p>If you have been thinking about building your own stream overlays instead of buying packs that every other channel is already using, this is the move to make. You do not need a design degree, you do not need expensive software, and you absolutely do not need to settle for the same generic template pack that fifty other streamers in your category are running right now.</p>
+
+    <p>Open a text editor, write your HTML, define your brand colors as CSS variables at the top of the file, use vmin for every size value you touch, structure your animation into phases with quiet moments built in, point OBS at the file, and ship it. That is the entire workflow in one paragraph, and the rest is just taste, patience, and the willingness to iterate until it feels right for your channel.</p>
+
+    <p>Underground Frequency runs on the principle that the signal should feel inevitable when it hits, and every overlay I build is an attempt to reinforce that principle one more time. If you build your own overlays, make sure every pixel serves the story you are telling about your channel, because viewers can feel the difference even when they cannot articulate it.</p>
+
+    <p class="article-signoff">Stay locked in.</p>
+
+    <aside class="article-author" data-reveal>
+      <div class="article-author-mark">UF</div>
+      <p><strong>Robert Williams</strong> streams as Underground Frequency on Twitch. For more on the UF overlay ecosystem, brand system, and custom stream tools, follow along at criticalbass.com.</p>
+    </aside>
+  </div>
+</article>
+
+<section class="article-outro">
+  <div class="wrap">
+    <div class="outro-card">
+      <div class="outro-glow" aria-hidden="true"></div>
+      <span class="section-label">// Keep the signal locked</span>
+      <h3>Catch the next transmission.</h3>
+      <p>Notes drop when the ideas are ready, not on a schedule. Follow on socials or swing back when the next one lands.</p>
+      <div class="outro-ctas">
+        <a href="index.html" class="btn btn-ghost">
+          <span>All Notes</span>
+        </a>
+        <a href="https://twitch.tv/undergroundfrequency" target="_blank" rel="noopener" class="btn btn-primary">
+          <span class="live-dot"></span>
+          <span>Tune In Live</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <span class="footer-mark">UF</span>
+      <span>© 2025 Underground Frequency · Robert Williams</span>
+    </div>
+    <div class="footer-center">criticalbass.com</div>
+    <div class="footer-right">
+      <span class="live-dot"></span>
+      <span>SIGNAL TRANSMITTED //</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../script.js"></script>
+</body>
+</html>
