@@ -111,39 +111,83 @@
     });
   });
 
-  /* ---------- Lightbox ---------- */
-  const lb = document.getElementById('lightbox');
-  const lbImg = document.getElementById('lightbox-img');
-  const lbCap = document.getElementById('lightbox-caption');
-  const lbClose = document.getElementById('lightbox-close');
+  /* ---------- Case study overlay ---------- */
+  const overlay = document.getElementById('case-overlay');
+  const overlayContent = document.getElementById('case-overlay-content');
+  const overlayClose = document.getElementById('case-overlay-close');
+  const overlayPrev = document.getElementById('case-overlay-prev');
+  const overlayNext = document.getElementById('case-overlay-next');
+  const overlayScroll = document.getElementById('case-overlay-scroll');
+  const caseData = document.getElementById('case-data');
 
-  const openLightbox = (src, title, meta) => {
-    lbImg.src = src;
-    lbImg.alt = title || '';
-    lbCap.textContent = [title, meta].filter(Boolean).join(' · ');
-    lb.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  };
-  const closeLightbox = () => {
-    lb.classList.remove('open');
-    document.body.style.overflow = '';
-    lbImg.src = '';
-  };
+  if (overlay && overlayContent && caseData) {
+    const caseOrder = Array.from(caseData.querySelectorAll('.case-source'))
+      .map(el => el.getAttribute('data-case-id'));
+    let currentIdx = -1;
+    let lastFocused = null;
 
-  if (lb && lbImg && lbCap && lbClose) {
+    const renderCase = (idx) => {
+      if (idx < 0 || idx >= caseOrder.length) return;
+      const id = caseOrder[idx];
+      const source = caseData.querySelector(`.case-source[data-case-id="${id}"]`);
+      if (!source) return;
+      overlayContent.innerHTML = source.innerHTML;
+      if (overlayScroll) overlayScroll.scrollTop = 0;
+      currentIdx = idx;
+    };
+
+    const openCase = (id, triggerEl) => {
+      const idx = caseOrder.indexOf(id);
+      if (idx < 0) return;
+      lastFocused = triggerEl || document.activeElement;
+      renderCase(idx);
+      overlay.classList.add('open');
+      overlay.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => overlayClose && overlayClose.focus(), 60);
+    };
+
+    const closeCase = () => {
+      overlay.classList.remove('open');
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      currentIdx = -1;
+      if (lastFocused && typeof lastFocused.focus === 'function') {
+        lastFocused.focus();
+      }
+    };
+
+    const stepCase = (delta) => {
+      if (currentIdx < 0) return;
+      const next = (currentIdx + delta + caseOrder.length) % caseOrder.length;
+      renderCase(next);
+    };
+
     tiles.forEach(tile => {
-      tile.addEventListener('click', () => {
-        const img = tile.querySelector('img');
-        const title = tile.querySelector('.tile-title')?.textContent || '';
-        const meta = tile.querySelector('.tile-meta')?.textContent || '';
-        if (img) openLightbox(img.src, title, meta);
+      const id = tile.getAttribute('data-case');
+      if (!id) return;
+      tile.addEventListener('click', () => openCase(id, tile));
+      tile.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openCase(id, tile);
+        }
       });
     });
 
-    lbClose.addEventListener('click', closeLightbox);
-    lb.addEventListener('click', (e) => { if (e.target === lb) closeLightbox(); });
+    overlayClose && overlayClose.addEventListener('click', closeCase);
+    overlayPrev && overlayPrev.addEventListener('click', () => stepCase(-1));
+    overlayNext && overlayNext.addEventListener('click', () => stepCase(1));
+
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay || e.target === overlayScroll) closeCase();
+    });
+
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && lb.classList.contains('open')) closeLightbox();
+      if (!overlay.classList.contains('open')) return;
+      if (e.key === 'Escape') closeCase();
+      else if (e.key === 'ArrowRight') stepCase(1);
+      else if (e.key === 'ArrowLeft') stepCase(-1);
     });
   }
 

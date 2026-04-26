@@ -224,7 +224,7 @@
     </div>
 
     <div class="gallery">
-      <figure class="tile tile-lg" data-cat="event" data-reveal>
+      <figure class="tile tile-lg" data-cat="event" data-case="signal-flyer" data-reveal role="button" tabindex="0" aria-label="Open SIGNAL flyer case study">
         <img src="event_flyer.jpg" alt="SIGNAL event flyer" loading="lazy">
         <figcaption>
           <span class="tile-cat">Event Branding</span>
@@ -233,7 +233,7 @@
         </figcaption>
       </figure>
 
-      <figure class="tile" data-cat="music" data-reveal>
+      <figure class="tile" data-cat="music" data-case="progressive-depths-vol-01" data-reveal role="button" tabindex="0" aria-label="Open Progressive Depths Vol. 01 case study">
         <img src="mix_artwork.jpg" alt="Progressive Depths Vol. 01 mix artwork" loading="lazy">
         <figcaption>
           <span class="tile-cat">Music Artwork</span>
@@ -242,7 +242,7 @@
         </figcaption>
       </figure>
 
-      <figure class="tile" data-cat="music" data-reveal>
+      <figure class="tile" data-cat="music" data-case="hyoryu" data-reveal role="button" tabindex="0" aria-label="Open Hyoryu case study">
         <img src="digital_release.jpg" alt="HYORYU digital release cover" loading="lazy">
         <figcaption>
           <span class="tile-cat">Music Artwork</span>
@@ -251,7 +251,7 @@
         </figcaption>
       </figure>
 
-      <figure class="tile tile-wide" data-cat="event" data-reveal>
+      <figure class="tile tile-wide" data-cat="event" data-case="signal-ticket" data-reveal role="button" tabindex="0" aria-label="Open SIGNAL ticket case study">
         <img src="event_ticket.jpg" alt="SIGNAL event ticket" loading="lazy">
         <figcaption>
           <span class="tile-cat">Event Branding</span>
@@ -260,7 +260,7 @@
         </figcaption>
       </figure>
 
-      <figure class="tile tile-tall" data-cat="event" data-reveal>
+      <figure class="tile tile-tall" data-cat="event" data-case="frequency-fridays-poster" data-reveal role="button" tabindex="0" aria-label="Open Frequency Fridays poster case study">
         <img src="set_poster.jpg" alt="Frequency Fridays set poster" loading="lazy">
         <figcaption>
           <span class="tile-cat">Event Branding</span>
@@ -269,7 +269,7 @@
         </figcaption>
       </figure>
 
-      <figure class="tile" data-cat="social" data-reveal>
+      <figure class="tile" data-cat="social" data-case="frequency-fridays-instagram" data-reveal role="button" tabindex="0" aria-label="Open Frequency Fridays Instagram template case study">
         <img src="instagram_template.jpg" alt="Instagram post template" loading="lazy">
         <figcaption>
           <span class="tile-cat">Social</span>
@@ -278,7 +278,7 @@
         </figcaption>
       </figure>
 
-      <figure class="tile" data-cat="event" data-reveal>
+      <figure class="tile" data-cat="event" data-case="all-bass-no-brakes" data-reveal role="button" tabindex="0" aria-label="Open All Bass No Brakes postcard case study">
         <img src="promotional_postcard.jpg" alt="All Bass No Brakes promotional postcard" loading="lazy">
         <figcaption>
           <span class="tile-cat">Event Branding</span>
@@ -287,7 +287,7 @@
         </figcaption>
       </figure>
 
-      <figure class="tile" data-cat="event" data-reveal>
+      <figure class="tile" data-cat="event" data-case="infiltrate808-collab" data-reveal role="button" tabindex="0" aria-label="Open Infiltrate808 x UF collab case study">
         <img src="guest_collab.jpg" alt="Infiltrate808 x Underground Frequency collab poster" loading="lazy">
         <figcaption>
           <span class="tile-cat">Event Branding</span>
@@ -296,7 +296,7 @@
         </figcaption>
       </figure>
 
-      <figure class="tile" data-cat="merch" data-reveal>
+      <figure class="tile" data-cat="merch" data-case="uf-crop-tee" data-reveal role="button" tabindex="0" aria-label="Open UF Crop Tee case study">
         <img src="tshirt.jpg" alt="Underground Frequency crop tee" loading="lazy">
         <figcaption>
           <span class="tile-cat">Merch</span>
@@ -305,7 +305,7 @@
         </figcaption>
       </figure>
 
-      <figure class="tile" data-cat="merch" data-reveal>
+      <figure class="tile" data-cat="merch" data-case="uf-sticker-sheet" data-reveal role="button" tabindex="0" aria-label="Open UF Sticker Sheet case study">
         <img src="sticker_sheet.jpg" alt="Underground Frequency sticker sheet" loading="lazy">
         <figcaption>
           <span class="tile-cat">Merch</span>
@@ -435,14 +435,272 @@
   </div>
 </footer>
 
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
-  <button class="lightbox-close" id="lightbox-close" aria-label="Close">
+<div class="case-overlay" id="case-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Case study viewer">
+  <button class="case-overlay-close" id="case-overlay-close" type="button" aria-label="Close case study">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
   </button>
-  <div class="lightbox-frame">
-    <img id="lightbox-img" src="" alt="">
-    <div class="lightbox-caption" id="lightbox-caption"></div>
+  <button class="case-overlay-prev" id="case-overlay-prev" type="button" aria-label="Previous case study">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <button class="case-overlay-next" id="case-overlay-next" type="button" aria-label="Next case study">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 6l6 6-6 6"/></svg>
+  </button>
+  <div class="case-overlay-scroll" id="case-overlay-scroll">
+    <article class="case-overlay-content" id="case-overlay-content"></article>
   </div>
+</div>
+
+<div id="case-data" hidden aria-hidden="true">
+
+  <div class="case-source" data-case-id="signal-flyer">
+    <header class="case-hero">
+      <div class="case-meta">
+        <span class="note-cat">Event Branding</span>
+        <span class="case-format">Event Flyer</span>
+      </div>
+      <h1 class="case-title">"<span class="grad">SIGNAL</span>"</h1>
+      <p class="case-subtitle">Promotional flyer for the SIGNAL livestream event.</p>
+    </header>
+    <div class="case-image-wrap">
+      <img src="event_flyer.jpg" alt="SIGNAL event flyer" class="case-image">
+    </div>
+    <div class="case-body">
+      <p class="case-lede">Promotional flyer for my <strong>SIGNAL</strong> livestream event.</p>
+      <p>I built the layout around the UF avatar as a central focal point, using a strong vertical hierarchy to walk the viewer's eye from the event name down through date, genre, and platform details.</p>
+      <p>The glowing waveform element behind the avatar reinforces the audio-driven theme of the brand.</p>
+    </div>
+    <div class="case-specs">
+      <div class="spec"><span class="spec-label">Category</span><span class="spec-value">Event Branding</span></div>
+      <div class="spec"><span class="spec-label">Format</span><span class="spec-value">Flyer · Print &amp; Digital</span></div>
+      <div class="spec"><span class="spec-label">Tools</span><span class="spec-value">Adobe Photoshop</span></div>
+      <div class="spec"><span class="spec-label">Palette</span><span class="spec-value"><span class="case-palette" aria-hidden="true"><span class="case-swatch" style="background:#00ffff"></span><span class="case-swatch" style="background:#ff00b4"></span><span class="case-swatch" style="background:#8a2bff"></span><span class="case-swatch" style="background:#05020e"></span></span></span></div>
+    </div>
+  </div>
+
+  <div class="case-source" data-case-id="progressive-depths-vol-01">
+    <header class="case-hero">
+      <div class="case-meta">
+        <span class="note-cat">Music Artwork</span>
+        <span class="case-format">Mix Artwork</span>
+      </div>
+      <h1 class="case-title">"<span class="grad">Progressive Depths Vol. 01</span>"</h1>
+      <p class="case-subtitle">Cover art for the Progressive Depths mix series.</p>
+    </header>
+    <div class="case-image-wrap">
+      <img src="mix_artwork.jpg" alt="Progressive Depths Vol. 01 mix artwork" class="case-image">
+    </div>
+    <div class="case-body">
+      <p class="case-lede">Cover art for my <strong>Progressive Depths</strong> mix series.</p>
+      <p>I deliberately used negative space in the upper right to let the title breathe, positioning the avatar in the lower left as a subtle brand anchor rather than the main focus.</p>
+      <p>The deep blue-to-violet palette sets a moodier, more introspective tone compared to my other pieces.</p>
+    </div>
+    <div class="case-specs">
+      <div class="spec"><span class="spec-label">Category</span><span class="spec-value">Music Artwork</span></div>
+      <div class="spec"><span class="spec-label">Format</span><span class="spec-value">Mix Series Cover</span></div>
+      <div class="spec"><span class="spec-label">Tools</span><span class="spec-value">Adobe Photoshop</span></div>
+      <div class="spec"><span class="spec-label">Palette</span><span class="spec-value"><span class="case-palette" aria-hidden="true"><span class="case-swatch" style="background:#1d2c8a"></span><span class="case-swatch" style="background:#5b3fbf"></span><span class="case-swatch" style="background:#a98bff"></span><span class="case-swatch" style="background:#05020e"></span></span></span></div>
+    </div>
+  </div>
+
+  <div class="case-source" data-case-id="hyoryu">
+    <header class="case-hero">
+      <div class="case-meta">
+        <span class="note-cat">Music Artwork</span>
+        <span class="case-format">Digital Release Cover</span>
+      </div>
+      <h1 class="case-title">"<span class="grad">Hyoryu</span>"</h1>
+      <p class="case-subtitle">Digital release cover artwork for the Hyoryu album.</p>
+    </header>
+    <div class="case-image-wrap">
+      <img src="digital_release.jpg" alt="Hyoryu digital release cover artwork" class="case-image">
+    </div>
+    <div class="case-body">
+      <p class="case-lede">Cover artwork for my album titled <strong>"Hyoryu,"</strong> blending Japanese cultural motifs with synthwave aesthetics.</p>
+      <p>I combined cherry blossoms and torii gates against neon light trails to capture the feeling of movement and drift the title suggests.</p>
+      <p>The cyan-to-magenta color palette ties it directly to the Underground Frequency brand while giving it a distinct identity on streaming platforms.</p>
+    </div>
+    <div class="case-specs">
+      <div class="spec"><span class="spec-label">Category</span><span class="spec-value">Music Artwork</span></div>
+      <div class="spec"><span class="spec-label">Format</span><span class="spec-value">Streaming Cover</span></div>
+      <div class="spec"><span class="spec-label">Tools</span><span class="spec-value">Adobe Photoshop</span></div>
+      <div class="spec"><span class="spec-label">Palette</span><span class="spec-value"><span class="case-palette" aria-hidden="true"><span class="case-swatch" style="background:#00ffff"></span><span class="case-swatch" style="background:#ff00b4"></span><span class="case-swatch" style="background:#8a2bff"></span><span class="case-swatch" style="background:#05020e"></span></span></span></div>
+    </div>
+  </div>
+
+  <div class="case-source" data-case-id="signal-ticket">
+    <header class="case-hero">
+      <div class="case-meta">
+        <span class="note-cat">Event Branding</span>
+        <span class="case-format">Event Ticket</span>
+      </div>
+      <h1 class="case-title">"<span class="grad">SIGNAL</span>" Ticket</h1>
+      <p class="case-subtitle">Companion ticket design for the SIGNAL event.</p>
+    </header>
+    <div class="case-image-wrap">
+      <img src="event_ticket.jpg" alt="SIGNAL event ticket" class="case-image">
+    </div>
+    <div class="case-body">
+      <p class="case-lede">A companion ticket design created alongside the <strong>SIGNAL</strong> flyer.</p>
+      <p>The horizontal format uses a perforated stub layout with a clean split between event details on the left and the admission info on the right.</p>
+      <p>I kept the cosmic nebula background consistent with the flyer to make the two pieces feel like part of a cohesive event package.</p>
+    </div>
+    <div class="case-specs">
+      <div class="spec"><span class="spec-label">Category</span><span class="spec-value">Event Branding</span></div>
+      <div class="spec"><span class="spec-label">Format</span><span class="spec-value">Print Collateral</span></div>
+      <div class="spec"><span class="spec-label">Tools</span><span class="spec-value">Adobe Photoshop</span></div>
+      <div class="spec"><span class="spec-label">Palette</span><span class="spec-value"><span class="case-palette" aria-hidden="true"><span class="case-swatch" style="background:#00ffff"></span><span class="case-swatch" style="background:#ff00b4"></span><span class="case-swatch" style="background:#8a2bff"></span><span class="case-swatch" style="background:#05020e"></span></span></span></div>
+    </div>
+  </div>
+
+  <div class="case-source" data-case-id="frequency-fridays-poster">
+    <header class="case-hero">
+      <div class="case-meta">
+        <span class="note-cat">Event Branding</span>
+        <span class="case-format">Set Poster</span>
+      </div>
+      <h1 class="case-title">"<span class="grad">Frequency Fridays</span>"</h1>
+      <p class="case-subtitle">Full-size poster for the recurring Frequency Fridays series.</p>
+    </header>
+    <div class="case-image-wrap">
+      <img src="set_poster.jpg" alt="Frequency Fridays set poster" class="case-image">
+    </div>
+    <div class="case-body">
+      <p class="case-lede">A full-size poster version of the <strong>Frequency Fridays</strong> branding, designed for higher-visibility placements.</p>
+      <p>The sweeping light trails create diagonal movement that pulls the eye from the logo at top through to the Twitch URL at the bottom.</p>
+      <p>Horizontal rule lines break up the text sections and add structure without boxing anything in.</p>
+    </div>
+    <div class="case-specs">
+      <div class="spec"><span class="spec-label">Category</span><span class="spec-value">Event Branding</span></div>
+      <div class="spec"><span class="spec-label">Format</span><span class="spec-value">Recurring Series Poster</span></div>
+      <div class="spec"><span class="spec-label">Tools</span><span class="spec-value">Adobe Photoshop</span></div>
+      <div class="spec"><span class="spec-label">Palette</span><span class="spec-value"><span class="case-palette" aria-hidden="true"><span class="case-swatch" style="background:#00ffff"></span><span class="case-swatch" style="background:#ff00b4"></span><span class="case-swatch" style="background:#8a2bff"></span><span class="case-swatch" style="background:#05020e"></span></span></span></div>
+    </div>
+  </div>
+
+  <div class="case-source" data-case-id="frequency-fridays-instagram">
+    <header class="case-hero">
+      <div class="case-meta">
+        <span class="note-cat">Social</span>
+        <span class="case-format">Instagram Announcement Template</span>
+      </div>
+      <h1 class="case-title">"<span class="grad">Frequency Fridays</span>" IG</h1>
+      <p class="case-subtitle">Square-format social graphic for the recurring series.</p>
+    </header>
+    <div class="case-image-wrap">
+      <img src="instagram_template.jpg" alt="Frequency Fridays Instagram announcement template" class="case-image">
+    </div>
+    <div class="case-body">
+      <p class="case-lede">A square-format social graphic designed specifically for Instagram to announce my recurring <strong>Frequency Fridays</strong> series.</p>
+      <p>The glowing border frame draws the eye inward toward the text stack, and I used a gradient shift from cyan to pink across the typography to create visual rhythm without cluttering the layout.</p>
+    </div>
+    <div class="case-specs">
+      <div class="spec"><span class="spec-label">Category</span><span class="spec-value">Social</span></div>
+      <div class="spec"><span class="spec-label">Format</span><span class="spec-value">Instagram Post · 1:1</span></div>
+      <div class="spec"><span class="spec-label">Tools</span><span class="spec-value">Adobe Photoshop</span></div>
+      <div class="spec"><span class="spec-label">Palette</span><span class="spec-value"><span class="case-palette" aria-hidden="true"><span class="case-swatch" style="background:#00ffff"></span><span class="case-swatch" style="background:#ff66c4"></span><span class="case-swatch" style="background:#ffffff"></span><span class="case-swatch" style="background:#05020e"></span></span></span></div>
+    </div>
+  </div>
+
+  <div class="case-source" data-case-id="all-bass-no-brakes">
+    <header class="case-hero">
+      <div class="case-meta">
+        <span class="note-cat">Event Branding</span>
+        <span class="case-format">Promotional Postcard</span>
+      </div>
+      <h1 class="case-title">"<span class="grad">ALL BASS NO BRAKES</span>"</h1>
+      <p class="case-subtitle">Double-sided postcard for the summer event.</p>
+    </header>
+    <div class="case-image-wrap">
+      <img src="promotional_postcard.jpg" alt="All Bass No Brakes promotional postcard" class="case-image">
+    </div>
+    <div class="case-body">
+      <p class="case-lede">A double-sided postcard design for the <strong>ALL BASS NO BRAKES</strong> summer event.</p>
+      <p>The top half is intentionally flipped so it reads correctly when the card is rotated, functioning as a two-in-one layout.</p>
+      <p>I included a QR code for quick access to the stream link, making it functional as both a physical handout and a digital share.</p>
+    </div>
+    <div class="case-specs">
+      <div class="spec"><span class="spec-label">Category</span><span class="spec-value">Event Branding</span></div>
+      <div class="spec"><span class="spec-label">Format</span><span class="spec-value">Postcard · Double-Sided</span></div>
+      <div class="spec"><span class="spec-label">Tools</span><span class="spec-value">Adobe Photoshop</span></div>
+      <div class="spec"><span class="spec-label">Palette</span><span class="spec-value"><span class="case-palette" aria-hidden="true"><span class="case-swatch" style="background:#00ffff"></span><span class="case-swatch" style="background:#ff00b4"></span><span class="case-swatch" style="background:#8a2bff"></span><span class="case-swatch" style="background:#05020e"></span></span></span></div>
+    </div>
+  </div>
+
+  <div class="case-source" data-case-id="infiltrate808-collab">
+    <header class="case-hero">
+      <div class="case-meta">
+        <span class="note-cat">Event Branding</span>
+        <span class="case-format">Guest Collaboration Poster</span>
+      </div>
+      <h1 class="case-title">Infiltrate808 <span class="grad">×</span> UF</h1>
+      <p class="case-subtitle">Collaborative set poster with Infiltrate808.</p>
+    </header>
+    <div class="case-image-wrap">
+      <img src="guest_collab.jpg" alt="Infiltrate808 x Underground Frequency collab poster" class="case-image">
+    </div>
+    <div class="case-body">
+      <p class="case-lede">A promotional poster for a collaborative set with <strong>Infiltrate808</strong>.</p>
+      <p>I used a split-composition technique with both artists' portraits merging into the glitch-style background.</p>
+      <p>The horizontal scan lines and lens flare effects create visual energy, while the genre tags at the bottom give viewers an immediate sense of the sound.</p>
+    </div>
+    <div class="case-specs">
+      <div class="spec"><span class="spec-label">Category</span><span class="spec-value">Event Branding</span></div>
+      <div class="spec"><span class="spec-label">Format</span><span class="spec-value">Collab Poster</span></div>
+      <div class="spec"><span class="spec-label">Tools</span><span class="spec-value">Adobe Photoshop</span></div>
+      <div class="spec"><span class="spec-label">Palette</span><span class="spec-value"><span class="case-palette" aria-hidden="true"><span class="case-swatch" style="background:#00ffff"></span><span class="case-swatch" style="background:#ff00b4"></span><span class="case-swatch" style="background:#8a2bff"></span><span class="case-swatch" style="background:#05020e"></span></span></span></div>
+    </div>
+  </div>
+
+  <div class="case-source" data-case-id="uf-crop-tee">
+    <header class="case-hero">
+      <div class="case-meta">
+        <span class="note-cat">Merch</span>
+        <span class="case-format">T-Shirt Design</span>
+      </div>
+      <h1 class="case-title"><span class="grad">UF Crop Tee</span></h1>
+      <p class="case-subtitle">Apparel design for the Critical Bass merch line.</p>
+    </header>
+    <div class="case-image-wrap">
+      <img src="tshirt.jpg" alt="Underground Frequency crop tee" class="case-image">
+    </div>
+    <div class="case-body">
+      <p class="case-lede">A merch-ready t-shirt mockup featuring the <strong>UF logo</strong> with integrated waveform and frequency elements.</p>
+      <p>I kept the design minimal on purpose so it reads clean on fabric at any size, using the brand's signature cyan-to-magenta gradient against black.</p>
+      <p>This was designed for production through my Critical Bass merch line on Fourthwall.</p>
+    </div>
+    <div class="case-specs">
+      <div class="spec"><span class="spec-label">Category</span><span class="spec-value">Merch</span></div>
+      <div class="spec"><span class="spec-label">Format</span><span class="spec-value">Apparel · Crop Tee</span></div>
+      <div class="spec"><span class="spec-label">Tools</span><span class="spec-value">Adobe Photoshop</span></div>
+      <div class="spec"><span class="spec-label">Palette</span><span class="spec-value"><span class="case-palette" aria-hidden="true"><span class="case-swatch" style="background:#00ffff"></span><span class="case-swatch" style="background:#ff00b4"></span><span class="case-swatch" style="background:#ffffff"></span><span class="case-swatch" style="background:#05020e"></span></span></span></div>
+    </div>
+  </div>
+
+  <div class="case-source" data-case-id="uf-sticker-sheet">
+    <header class="case-hero">
+      <div class="case-meta">
+        <span class="note-cat">Merch</span>
+        <span class="case-format">Sticker Sheet</span>
+      </div>
+      <h1 class="case-title"><span class="grad">UF Sticker Sheet</span></h1>
+      <p class="case-subtitle">Branded sticker sheet for the summer drop.</p>
+    </header>
+    <div class="case-image-wrap">
+      <img src="sticker_sheet.jpg" alt="Underground Frequency sticker sheet" class="case-image">
+    </div>
+    <div class="case-body">
+      <p class="case-lede">A branded sticker sheet featuring <strong>seven individual sticker designs</strong> pulled from key UF phrases, icons, and event names.</p>
+      <p>Each sticker uses a white die-cut border for print-readiness, and I designed them to work both as a cohesive sheet and as standalone pieces.</p>
+      <p>The tropical background ties into the summer event branding.</p>
+    </div>
+    <div class="case-specs">
+      <div class="spec"><span class="spec-label">Category</span><span class="spec-value">Merch</span></div>
+      <div class="spec"><span class="spec-label">Format</span><span class="spec-value">Die-Cut Sticker Sheet</span></div>
+      <div class="spec"><span class="spec-label">Tools</span><span class="spec-value">Adobe Photoshop</span></div>
+      <div class="spec"><span class="spec-label">Palette</span><span class="spec-value"><span class="case-palette" aria-hidden="true"><span class="case-swatch" style="background:#00ffff"></span><span class="case-swatch" style="background:#ff00b4"></span><span class="case-swatch" style="background:#ff9f3d"></span><span class="case-swatch" style="background:#3dd6a8"></span></span></span></div>
+    </div>
+  </div>
+
 </div>
 
 <script src="script.js"></script>

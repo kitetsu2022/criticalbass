@@ -945,57 +945,344 @@ footer {
 }
 .footer-right { text-align: right; display: flex; justify-content: flex-end; align-items: center; gap: 8px; }
 
-/* ---------- Lightbox ---------- */
+/* ---------- Case study pages ---------- */
 
-.lightbox {
-  position: fixed; inset: 0;
-  background: rgba(5, 2, 14, 0.96);
-  backdrop-filter: blur(18px);
-  z-index: 500;
-  display: none;
-  justify-content: center; align-items: center;
-  padding: 40px;
-  animation: lbIn 0.3s var(--ease);
+.case-hero {
+  position: relative;
+  z-index: 3;
+  padding: 140px 40px 40px;
+  overflow: hidden;
 }
-.lightbox.open { display: flex; }
-@keyframes lbIn {
+.case-hero-inner {
+  max-width: 920px;
+  margin: 0 auto;
+}
+.case-meta {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+  margin-bottom: 22px;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+}
+.case-meta .note-cat { color: var(--cyan); }
+.case-meta .case-format { color: var(--muted); }
+.case-title {
+  font-family: 'Orbitron', monospace;
+  font-weight: 800;
+  font-size: clamp(36px, 5.4vw, 72px);
+  line-height: 1.05;
+  letter-spacing: -1.5px;
+  color: var(--white);
+  margin-bottom: 14px;
+}
+.case-title .grad {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.case-subtitle {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: var(--muted);
+  margin-bottom: 28px;
+}
+.case-byline {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--cyan);
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.case-image-wrap {
+  position: relative;
+  z-index: 3;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 40px 30px;
+  text-align: center;
+}
+.case-image-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 30px 30px;
+  background: radial-gradient(ellipse at center, rgba(0, 255, 255, 0.12), transparent 60%);
+  filter: blur(60px);
+  z-index: -1;
+}
+.case-image {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: 86vh;
+  object-fit: contain;
+  margin: 0 auto;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 0, 180, 0.08);
+}
+
+.case-body {
+  position: relative;
+  z-index: 3;
+  max-width: 720px;
+  padding: 50px 40px 30px;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 18px;
+  line-height: 1.85;
+  color: #cac5ea;
+  margin: 0 auto;
+}
+.case-body p {
+  margin-bottom: 22px;
+}
+.case-body p.case-lede {
+  font-size: 21px;
+  line-height: 1.65;
+  color: var(--text);
+  margin-bottom: 30px;
+}
+.case-body strong {
+  color: var(--white);
+  font-weight: 600;
+}
+
+.case-specs {
+  position: relative;
+  z-index: 3;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 28px;
+  border-top: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border-soft);
+}
+.spec {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.spec-label {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--magenta);
+  text-transform: uppercase;
+}
+.spec-value {
+  font-family: 'Orbitron', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.5px;
+}
+.case-palette {
+  display: flex; align-items: center; gap: 6px;
+}
+.case-swatch {
+  width: 24px; height: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.case-nav {
+  position: relative;
+  z-index: 3;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 56px 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.case-nav a {
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 24px 26px;
+  background: linear-gradient(145deg, rgba(15, 8, 40, 0.7), rgba(21, 10, 53, 0.35));
+  border: 1px solid var(--border-soft);
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s, background 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.case-nav a:hover {
+  border-color: rgba(0, 255, 255, 0.35);
+  transform: translateY(-3px);
+  box-shadow: 0 14px 42px rgba(0, 0, 0, 0.45), 0 0 22px rgba(0, 255, 255, 0.08);
+}
+.case-nav-direction {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+.case-nav-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -0.2px;
+  line-height: 1.25;
+}
+.case-nav-format {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.case-nav-next {
+  text-align: right;
+  align-items: flex-end;
+}
+.case-nav a.disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+@media (max-width: 980px) {
+  .case-hero { padding: 120px 24px 32px; }
+  .case-image-wrap { padding: 40px 24px 20px; }
+  .case-body { padding: 36px 24px 20px; font-size: 17px; }
+  .case-body p.case-lede { font-size: 19px; }
+  .case-specs { padding: 32px 24px; gap: 20px; }
+  .case-nav { padding: 40px 24px; grid-template-columns: 1fr; }
+  .case-nav-next { text-align: left; align-items: flex-start; }
+}
+
+/* Hidden case data source (cloned into overlay) */
+#case-data { display: none; }
+
+/* Case overlay (modal) */
+.case-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(5, 2, 14, 0.97);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  display: none;
+  overflow: hidden;
+}
+.case-overlay.open {
+  display: block;
+  animation: caseOverlayIn 0.35s var(--ease) both;
+}
+@keyframes caseOverlayIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
-.lightbox-frame {
+.case-overlay-scroll {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.case-overlay-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 88px 24px 60px;
   position: relative;
-  max-width: 90vw; max-height: 90vh;
-  display: flex; flex-direction: column; gap: 16px;
-  align-items: center;
+  animation: caseContentIn 0.5s 0.08s var(--ease) both;
 }
-.lightbox img {
-  max-width: 100%; max-height: 80vh;
-  object-fit: contain;
-  border: 1px solid rgba(0, 255, 255, 0.3);
-  box-shadow: 0 0 80px rgba(0, 255, 255, 0.15), 0 20px 60px rgba(0, 0, 0, 0.8);
+@keyframes caseContentIn {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-.lightbox-caption {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 12px;
-  letter-spacing: 2px;
-  color: var(--cyan);
-  text-transform: uppercase;
-  text-align: center;
+
+/* Tighter spacing inside overlay than standalone pages */
+.case-overlay-content .case-hero {
+  padding: 0 0 28px;
 }
-.lightbox-close {
-  position: absolute; top: 24px; right: 32px;
-  width: 44px; height: 44px;
-  background: transparent;
+.case-overlay-content .case-hero-inner {
+  padding: 0;
+  max-width: none;
+}
+.case-overlay-content .case-image-wrap {
+  padding: 28px 0;
+}
+.case-overlay-content .case-image-wrap::before {
+  inset: 12px;
+}
+.case-overlay-content .case-body {
+  padding: 32px 0 16px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.case-overlay-content .case-specs {
+  padding: 32px 0;
+}
+
+/* Floating overlay controls */
+.case-overlay-close,
+.case-overlay-prev,
+.case-overlay-next {
+  position: fixed;
+  width: 48px; height: 48px;
+  background: rgba(5, 2, 14, 0.85);
   border: 1px solid var(--cyan);
   color: var(--cyan);
   display: grid; place-items: center;
-  transition: background 0.25s, box-shadow 0.25s, transform 0.25s;
+  cursor: pointer;
+  z-index: 10;
+  backdrop-filter: blur(8px);
+  transition: background 0.25s, box-shadow 0.25s, transform 0.25s, border-color 0.25s;
 }
-.lightbox-close svg { width: 18px; height: 18px; }
-.lightbox-close:hover {
-  background: rgba(0, 255, 255, 0.1);
-  box-shadow: var(--glow-cyan);
+.case-overlay-close svg,
+.case-overlay-prev svg,
+.case-overlay-next svg {
+  width: 18px; height: 18px;
+}
+.case-overlay-close {
+  top: 24px; right: 24px;
+}
+.case-overlay-close:hover {
+  background: rgba(0, 255, 255, 0.15);
+  box-shadow: 0 0 24px rgba(0, 255, 255, 0.35);
   transform: rotate(90deg);
+}
+.case-overlay-prev,
+.case-overlay-next {
+  top: 50%;
+  transform: translateY(-50%);
+}
+.case-overlay-prev { left: 24px; }
+.case-overlay-next { right: 24px; }
+.case-overlay-prev:hover,
+.case-overlay-next:hover {
+  background: rgba(0, 255, 255, 0.15);
+  box-shadow: 0 0 22px rgba(0, 255, 255, 0.3);
+}
+
+@media (max-width: 760px) {
+  .case-overlay-prev,
+  .case-overlay-next {
+    top: auto; bottom: 24px;
+    transform: none;
+  }
+  .case-overlay-prev { left: 16px; }
+  .case-overlay-next { right: 16px; }
+  .case-overlay-close {
+    top: 16px; right: 16px;
+    width: 42px; height: 42px;
+  }
+  .case-overlay-content {
+    padding: 72px 16px 100px;
+  }
+}
+
+/* Tile becomes a button */
+.tile { font-family: inherit; text-align: left; color: inherit; padding: 0; }
+.tile:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 4px;
 }
 
 /* ---------- Manifesto section breaker ---------- */
